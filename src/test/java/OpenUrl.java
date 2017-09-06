@@ -5,25 +5,17 @@ import java.util.concurrent.TimeUnit;
 
 import static org.testng.AssertJUnit.assertEquals;
 
-public class OpenUrl extends Data {
-    @BeforeTest
-    public void setUp() {
-        driver = new FirefoxDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get(DOMAIN_URL);
-        driver.manage().window().maximize();
+public class OpenUrl extends Test
+{
 
-    }
     @Test
     public void openUrl(){
-        GoogleMainPage inGooglePage = new GoogleMainPage(driver);
-        GoogleResultPage inGoogleResultPage = inGooglePage.findByText("Wix");
-        WixMainPage wixMainPage = inGoogleResultPage.getWixMainPage();
-        assertEquals("Wix",wixMainPage.getTextFromLogo());
+        GoogleHomePage googleHomePage = new GoogleHomePage(driver);
+        googleHomePage.open();
+        GoogleResultPage googleResults = googleHomePage.findByText("Wix");
+        googleResults.followLinkToSite("https://www.wix.com/");
+        WixHomePage wixMainPage = new WixHomePage(driver);
+        assertEquals("Wix", wixMainPage.getTextFromLogo());
     }
 
-    @AfterTest
-    public void tearDown() {
-        driver.quit();
-    }
 }
