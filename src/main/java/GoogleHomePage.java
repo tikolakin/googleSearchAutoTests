@@ -2,15 +2,21 @@ import org.openqa.selenium.WebDriver;
 
 class GoogleHomePage extends BasePage
 {
-    private String path = "/";
+    private String path = "";
 
     private String searchField = ".//input[@title='Search']";
     private String hintList = ".//ul[@role='listbox']";
 
     public GoogleHomePage open()
     {
-      super.open(domainUrl + path);
+      super.open(this.path);
+      verifyPage();
       return this;
+    }
+
+    public void verifyPage()
+    {
+        assertEquals("Current page is not Google homepage.", "Go to Google Home.", getText(".//h1"));
     }
 
     public GoogleResultPage findByText(String text){

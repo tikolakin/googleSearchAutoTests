@@ -18,7 +18,7 @@ public class BasePage
     public BasePage open(String path)
     {
       driver.get(domainUrl + '/' + path);
-      return BasePage
+      return this;
     }
 
     public void click(String clickXpath)
@@ -30,6 +30,7 @@ public class BasePage
     {
         xpath = "//a[text()='" + linkText + "']";
         click(xpath);
+        waitAjax();
     }
 
     public void sendText(String inputText,String sendXpath)
@@ -48,7 +49,7 @@ public class BasePage
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(locator)));
     }
 
-    public void waitAjax(int time)
+    public void waitAjax(int time = 10)
     {
         new WebDriverWait(WebDriver, time).until(
         webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
