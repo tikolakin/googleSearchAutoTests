@@ -1,27 +1,30 @@
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 
- class WixHomePage extends BasePage
- {
-    public String domainUrl = "http://www.wix.com/";
+class WixHomePage extends BasePage {
+    private String domainUrl = "http://www.wix.com/";
     private String path = "";
 
     private String logoPath = ".//*[@id='wm-logo']";
     private final String brandName = "Wix";
 
-    public WixHomePage open()
-    {
-      super.open(this.domainUrl + "/" + this.path);
-      return this;
+    public WixHomePage(WebDriver driver) {
+        super(driver);
     }
 
-    public void verifyPage()
-    {
-        assertEquals("Current page is not Wix page.", brandName, getText(logoPath));
+    public WixHomePage open() throws Exception {
+        super.open(this.domainUrl + "/" + this.path);
+        verifyPage();
+        return this;
     }
 
-    public String getTextFromLogo(){
-        return String getText(logoPath);
+    public void verifyPage() throws Exception {
+        if (!brandName.equals(getText(logoPath))) {
+            throw new Exception("Current page is not Wix page.");
+        }
+    }
+
+    public String getTextFromLogo() {
+        return getText(logoPath);
     }
 
 }
